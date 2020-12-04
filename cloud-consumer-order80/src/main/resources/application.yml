@@ -12,6 +12,11 @@ spring:
     druid:
       initial-size: 10
       max-active: 10
+
+#eureka客户端的配置
+
+
+#mybatis的配置
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml # 指定mapper映射的路径
   type-aliases-package: com.coderman.payment.model
