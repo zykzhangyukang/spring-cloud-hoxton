@@ -12,6 +12,14 @@ spring:
     druid:
       initial-size: 10
       max-active: 10
+#eureka客户端的配置
+eureka:
+  instance:
+    instance-id: cloud-payment-service-8001 # 修改实例的别名
+    prefer-ip-address: true # 显示IP
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka #注册服务到eureka服务器
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml # 指定mapper映射的路径
   type-aliases-package: com.coderman.payment.model

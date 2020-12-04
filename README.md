@@ -62,7 +62,26 @@ public class Eureka7001Application {
 
 - application.yml配置
 
-```xml
+```yml
+eureka:
+  instance:
+    instance-id: cloud-payment-service-8001 # 修改实例的别名
+    prefer-ip-address: true # 显示IP
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka #注册服务到eureka服务器
+```
 
+- 启动类添加注解
+
+```java
+@SpringBootApplication
+@EnableEurekaClient
+@MapperScan(basePackages = {"com.coderman.payment.mapper"})
+public class Payment8001Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Payment8001Application.class,args);
+    }
+}
 ```
 

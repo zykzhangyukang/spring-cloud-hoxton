@@ -12,10 +12,15 @@ spring:
     druid:
       initial-size: 10
       max-active: 10
-
-#eureka客户端的配置
-
-
+#eureka客户端配置
+eureka:
+  instance:
+    instance-id: cloud-order-service-80 # 修改实例的别名
+    prefer-ip-address: true # 显示IP
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka #注册服务到eureka服务器
+    register-with-eureka: false #消费者服务是否注册进eureka
 #mybatis的配置
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml # 指定mapper映射的路径
