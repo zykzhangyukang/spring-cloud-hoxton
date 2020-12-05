@@ -1,0 +1,10 @@
+server:
+  port: 7002
+eureka:
+  instance:
+    hostname: server2.com
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://server1.com:7001/eureka/,http://server3.com:7003/eureka/

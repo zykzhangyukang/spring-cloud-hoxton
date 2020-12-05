@@ -85,3 +85,46 @@ public class Payment8001Application {
 }
 ```
 
+#### 2. 使用Eureka集群
+
+##### 1. 配置host文件
+```text
+# 配置eureka集群
+127.0.0.1 server1.com
+127.0.0.1 server2.com
+127.0.0.1 server3.com
+```
+##### 2. 服务端
+
+- 修改application.yml
+
+```yml
+server:
+  port: 7001
+eureka:
+  instance:
+    hostname: server1.com
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://server2.com:7002/eureka/,http://server3.com:7003/eureka/
+```
+
+##### 3. 客户端
+
+- 修改application.yml
+
+```yml
+#eureka客户端的配置
+eureka:
+  instance:
+    instance-id: cloud-payment-service-8001 # 修改实例的别名
+    prefer-ip-address: true # 显示IP
+  client:
+    service-url:
+      defaultZone: http://server1.com:7001/eureka/,http://server2.com:7002/eureka/,http://server3.com:7003/eureka/ #注册服务到eureka服务器
+```
+
+
+

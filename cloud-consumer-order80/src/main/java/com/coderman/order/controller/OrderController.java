@@ -33,15 +33,17 @@ public class OrderController {
 
     /**
      * 订单支付
+     *
      * @param orderId
      * @return
      */
     @GetMapping(value = "/pay/{orderId}")
     public JsonData pay(@PathVariable(value = "orderId") String orderId) {
         Order order = orderService.pay(orderId);
-        if(order==null){
+        if (order == null) {
+            logger.info("订单服务-没有查询到订单,orderId:{}", orderId);
             return JsonData.fail("order not found");
-        }else {
+        } else {
             logger.info("订单服务-查询到订单:{}", order);
             JsonData result = restTemplate.getForObject(REST_URL + "/create/" + order.getOrderId() + "/" + order.getMoney(), JsonData.class);
             logger.info("订单服务-调用支付服务,result:{}", result);

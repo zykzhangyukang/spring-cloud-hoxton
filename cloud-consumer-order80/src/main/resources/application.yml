@@ -19,8 +19,8 @@ eureka:
     prefer-ip-address: true # 显示IP
   client:
     service-url:
-      defaultZone: http://localhost:7001/eureka #注册服务到eureka服务器
-    register-with-eureka: false #消费者服务是否注册进eureka
+      defaultZone: http://server1.com:7001/eureka/,http://server2.com:7002/eureka/,http://server3.com:7003/eureka/ #注册服务到eureka服务器
+    register-with-eureka: true #消费者服务是否注册进eureka
 #mybatis的配置
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml # 指定mapper映射的路径
