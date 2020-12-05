@@ -1,7 +1,6 @@
 package com.coderman.payment.controller;
 
 import com.coderman.common.vo.JsonData;
-import com.coderman.payment.model.Payment;
 import com.coderman.payment.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @Author zhangyukang
@@ -57,7 +55,7 @@ public class PaymentController {
     public JsonData create(@PathVariable(value = "orderId") String orderId,
                       @PathVariable(value = "money") BigDecimal money) {
         paymentService.create(money, orderId);
-        return JsonData.success("支付订单成功");
+        return JsonData.success("支付服务【8001】,支付订单成功");
     }
 
 }

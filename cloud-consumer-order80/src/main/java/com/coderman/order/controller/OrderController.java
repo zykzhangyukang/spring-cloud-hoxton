@@ -23,7 +23,7 @@ public class OrderController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final String REST_URL = "http://127.0.0.1:8001/provider/payment";
+    private final String REST_URL = "http://CLOUD-PAYMENT-SERVICE";
 
     @Autowired
     private OrderService orderService;
@@ -45,7 +45,7 @@ public class OrderController {
             return JsonData.fail("order not found");
         } else {
             logger.info("订单服务-查询到订单:{}", order);
-            JsonData result = restTemplate.getForObject(REST_URL + "/create/" + order.getOrderId() + "/" + order.getMoney(), JsonData.class);
+            JsonData result = restTemplate.getForObject(REST_URL + "/provider/payment/create/" + order.getOrderId() + "/" + order.getMoney(), JsonData.class);
             logger.info("订单服务-调用支付服务,result:{}", result);
             return JsonData.success("pay order success");
         }

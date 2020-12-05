@@ -126,5 +126,25 @@ eureka:
       defaultZone: http://server1.com:7001/eureka/,http://server2.com:7002/eureka/,http://server3.com:7003/eureka/ #注册服务到eureka服务器
 ```
 
+#### 3. 使用Ribbon实现负载均衡
+
+> 因为引入的eureka客户端依赖里包含了Ribbon的依赖，因此不需要到入任何的依赖,使用起来也非常简单
+>只需要两步即可。
+
+- 修改Rest服务调用的地址,对应Eureka服务列表的服务名称。
+
+```java
+private final String REST_URL = "http://CLOUD-PAYMENT-SERVICE";
+```
+
+- 开启RestTemplate负载均衡功能
+
+```java
+ @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
+}
+```
 
 

@@ -57,7 +57,7 @@ public class PaymentController {
     public JsonData create(@PathVariable(value = "orderId") String orderId,
                       @PathVariable(value = "money") BigDecimal money) {
         paymentService.create(money, orderId);
-        return JsonData.success("支付订单成功");
+        return JsonData.success("支付服务【8002】,支付订单成功");
     }
 
 }
