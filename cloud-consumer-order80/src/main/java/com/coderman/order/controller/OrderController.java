@@ -47,7 +47,7 @@ public class OrderController {
             logger.info("订单服务-查询到订单:{}", order);
             JsonData result = restTemplate.getForObject(REST_URL + "/provider/payment/create/" + order.getOrderId() + "/" + order.getMoney(), JsonData.class);
             logger.info("订单服务-调用支付服务,result:{}", result);
-            return JsonData.success("pay order success");
+            return JsonData.success("pay order success!,result="+result);
         }
     }
 }
