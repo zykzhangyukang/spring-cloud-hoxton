@@ -6,11 +6,15 @@
 
 - cloud-api-commons: 公共模块，封装一些通用的类和工具 
 - cloud-consumer-order80: 服务消费者（模拟订单模块）端口:80
+- cloud-consumer-order80-zk: 服务消费者（模拟订单模块）,zookeeper作为 服务注册中心 端口:80
+- cloud-consumer-order80-consul: 服务消费者（模拟订单模块）,consul作为 服务注册中心 端口:80
 - cloud-provider-payment8001: 服务提供者 （模拟支付模块）端口:8001
 - cloud-provider-payment8002: 服务提供者 （模拟支付模块）端口:8002
-- cloud-eureka-server7001: 注册中心（eureka）端口: 7001
-- cloud-eureka-server7002: 注册中心（eureka）端口: 7002
-- cloud-eureka-server7003: 注册中心（eureka）端口: 7003
+- cloud-provider-payment8003-zk: 服务提供者 （模拟支付模块）,zookeeper作为 服务注册中心 端口:8003
+- cloud-provider-payment8004-consul: 服务提供者 （模拟支付模块）,consul 服务注册中心 端口:8004
+- cloud-eureka-server7001: 服务注册中心（eureka）端口: 7001
+- cloud-eureka-server7002: 服务注册中心（eureka）端口: 7002
+- cloud-eureka-server7003: 服务注册中心（eureka）端口: 7003
 
 ## 2. 搭建教程
 
@@ -151,7 +155,8 @@ private final String REST_URL = "http://CLOUD-PAYMENT-SERVICE";
 ```
 
 ### 4. 使用Zookeeper作为注册中心
-> 服务端启动本地的zookeeper服务器即可。
+> 安装zookeeper服务端,启动本地的zookeeper服务器即可。
+
 #### 1. 客户端
 
 - 引入依赖
@@ -213,4 +218,49 @@ public class Payment8003Application {
     }
 }
 ```
+
+
+### 5. 使用Consul作为注册中心
+> 安装consul服务端,启动本地的consul服务器即可。
+
+#### 1. 客户端
+
+- 引入依赖
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+</dependency>
+```
+
+- 配置application.yml
+
+```yml
+ #配置consul客户端
+spring:   
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        heartbeat:
+          enabled: true
+```
+
+- 配置启动类
+
+```java
+@SpringBootApplication
+@EnableDiscoveryClient
+@MapperScan(basePackages = {"com.coderman.payment.mapper"})
+public class Payment8004ConsulApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(Payment8004ConsulApplication.class,args);
+    }
+}
+
+```
+
 
