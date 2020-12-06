@@ -13,8 +13,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 @EnableDiscoveryClient
 @MapperScan(basePackages = {"com.coderman.payment.mapper"})
-public class Payment8003Application {
+public class Payment8003ZKApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Payment8003Application.class,args);
+        SpringApplication.run(Payment8003ZKApplication.class,args);
     }
 }

@@ -13,5 +13,4 @@ public interface PaymentMapper {
     Payment findById(Long id);
     void save(String serial);
     List<Payment> listAll();
-
 }

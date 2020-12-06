@@ -1,14 +1,14 @@
 server:
-  port: 8003
+  port: 80
 spring:
   application:
-    name: cloud-payment-service
+    name: cloud-order-service
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
     password: zhangyukang
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3307/db_01?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3307/db_02?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     druid:
       initial-size: 10
       max-active: 10
@@ -17,6 +17,7 @@ spring:
     zookeeper:
       # 默认localhost:2181
       connect-string: localhost:2181
+#mybatis的配置
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml # 指定mapper映射的路径
   type-aliases-package: com.coderman.payment.model

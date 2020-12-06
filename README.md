@@ -2,7 +2,7 @@
 
 > 搭建微服务项目，用于个人的环境搭建提供代码示例，粘贴即可用。
 
-### 1. 项目结构
+## 1. 项目结构
 
 - cloud-api-commons: 公共模块，封装一些通用的类和工具 
 - cloud-consumer-order80: 服务消费者（模拟订单模块）端口:80
@@ -12,11 +12,11 @@
 - cloud-eureka-server7002: 注册中心（eureka）端口: 7002
 - cloud-eureka-server7003: 注册中心（eureka）端口: 7003
 
-### 2. 搭建教程
+## 2. 搭建教程
 
-#### 1. 使用Eureka作为注册中心
+### 1. 使用Eureka作为注册中心
 
-##### 1. 服务端
+#### 1. 服务端
 
 - 引入依赖
 
@@ -52,7 +52,7 @@ public class Eureka7001Application {
 }
 ```
 
-##### 2. 客户端
+#### 2. 客户端
 
 - 引入依赖
 
@@ -88,16 +88,16 @@ public class Payment8001Application {
 }
 ```
 
-#### 2. 使用Eureka集群
+### 2. 使用Eureka集群
 
-##### 1. 配置host文件
+#### 1. 配置host文件
 ```text
 # 配置eureka集群
 127.0.0.1 server1.com
 127.0.0.1 server2.com
 127.0.0.1 server3.com
 ```
-##### 2. 服务端
+#### 2. 服务端
 
 - 修改application.yml
 
@@ -114,7 +114,7 @@ eureka:
       defaultZone: http://server2.com:7002/eureka/,http://server3.com:7003/eureka/
 ```
 
-##### 3. 客户端
+#### 3. 客户端
 
 - 修改application.yml
 
@@ -129,7 +129,7 @@ eureka:
       defaultZone: http://server1.com:7001/eureka/,http://server2.com:7002/eureka/,http://server3.com:7003/eureka/ #注册服务到eureka服务器
 ```
 
-#### 3. 使用Ribbon实现负载均衡
+### 3. 使用Ribbon实现负载均衡
 
 > 因为引入的eureka客户端依赖里包含了Ribbon的依赖，因此不需要到入任何的依赖,使用起来也非常简单
 >只需要两步即可。
@@ -150,9 +150,9 @@ private final String REST_URL = "http://CLOUD-PAYMENT-SERVICE";
 }
 ```
 
-#### 4. 使用Zookeeper作为注册中心
+### 4. 使用Zookeeper作为注册中心
 > 服务端启动本地的zookeeper服务器即可。
-##### 1. 客户端
+#### 1. 客户端
 
 - 引入依赖
 
