@@ -7,7 +7,10 @@
 - cloud-api-commons: 公共模块，封装一些通用的类和工具 
 - cloud-consumer-order80: 服务消费者（模拟订单模块）端口:80
 - cloud-provider-payment8001: 服务提供者 （模拟支付模块）端口:8001
+- cloud-provider-payment8002: 服务提供者 （模拟支付模块）端口:8002
 - cloud-eureka-server7001: 注册中心（eureka）端口: 7001
+- cloud-eureka-server7002: 注册中心（eureka）端口: 7002
+- cloud-eureka-server7003: 注册中心（eureka）端口: 7003
 
 ### 2. 搭建教程
 
@@ -147,4 +150,67 @@ private final String REST_URL = "http://CLOUD-PAYMENT-SERVICE";
 }
 ```
 
+#### 4. 使用Zookeeper作为注册中心
+> 服务端启动本地的zookeeper服务器即可。
+##### 1. 客户端
+
+- 引入依赖
+
+```xml
+ <!--SpringBoot整合Zookeeper客户端-->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
+    <!--先排除自带的zookeeper3.5.3-->
+   <exclusions>
+       <exclusion>
+           <groupId>org.apache.zookeeper</groupId>
+           <artifactId>zookeeper</artifactId>
+       </exclusion>
+   </exclusions>
+</dependency>
+<!--添加zookeeper3.4.10版本-->
+<dependency>
+    <groupId>org.apache.zookeeper</groupId>
+    <artifactId>zookeeper</artifactId>
+    <version>3.4.10</version>
+    <exclusions>
+        <exclusion>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+        <exclusion>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+```
+
+- 配置application.yml
+
+```yml
+spring:
+   cloud:
+    zookeeper:
+      # 默认localhost:2181
+      connect-string: localhost:2181
+```
+
+- 配置启动类
+
+```java
+@SpringBootApplication
+@EnableDiscoveryClient
+@MapperScan(basePackages = {"com.coderman.payment.mapper"})
+public class Payment8003Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Payment8003Application.class,args);
+    }
+}
+```
 
