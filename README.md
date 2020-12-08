@@ -154,6 +154,44 @@ private final String REST_URL = "http://CLOUD-PAYMENT-SERVICE";
 }
 ```
 
+- 如何替换Ribbon的负载均衡规则
+
+1.全局替换：向IOC容器中注入一个指定的规则，此后无论调用哪个服务，都使用这套规则。
+```java
+@Bean
+public IRule rule(){
+    return new RandomRule();
+}
+```
+2.局部替换：配置调用指定的服务，使用指定的负载均衡规则。第一，我们需要向IOC容器中注入规则（注意该配置）
+一定要放在启动类外面的包结构，而后在进行规则配置。
+
+```java
+@Configuration
+public class MyRule {
+    @Bean
+    public IRule rule(){
+        return new RandomRule();
+    }
+}
+```
+
+
+```java
+@Configuration
+//对于CLOUD-PAYMENT-SERVICE，使用复制均衡的规则为: MyRule
+@RibbonClient(name = "CLOUD-PAYMENT-SERVICE",configuration = {MyRule.class})
+public class RestConfig {
+}
+```
+
+3.基于配置的替换: 在application.yml文件中进行配置。
+```yml
+CLOUD-PAYMENT-SERVICE:
+              ribbon:
+               NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+```
+
 ### 4. 使用Zookeeper作为注册中心
 > 安装zookeeper服务端,启动本地的zookeeper服务器即可。
 
