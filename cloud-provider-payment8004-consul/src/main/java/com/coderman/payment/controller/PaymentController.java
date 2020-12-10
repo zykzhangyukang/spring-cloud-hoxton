@@ -52,9 +52,8 @@ public class PaymentController {
      * @return
      */
     @GetMapping(value = "/create/{orderId}/{money}")
-    public JsonData create(@PathVariable(value = "orderId") String orderId,
-                      @PathVariable(value = "money") BigDecimal money) {
-        paymentService.create(money, orderId);
+    public JsonData create(@PathVariable(value = "orderId") String orderId, @PathVariable(value = "money") BigDecimal money) {
+        paymentService.create( orderId,money);
         return JsonData.success("支付服务【8001】,支付订单成功");
     }
 

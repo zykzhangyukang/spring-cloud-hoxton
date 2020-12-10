@@ -24,7 +24,7 @@ public interface PaymentService {
      * @param money
      * @param orderId
      */
-    void create(BigDecimal money,String orderId);
+    void create(String orderId,BigDecimal money);
 
     /**
      * 所有支付流水

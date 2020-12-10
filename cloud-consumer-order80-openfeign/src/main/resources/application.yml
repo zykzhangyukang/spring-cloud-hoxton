@@ -1,0 +1,46 @@
+server:
+  port: 80
+spring:
+  application:
+    name: cloud-order-service
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: zhangyukang
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3307/db_02?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    druid:
+      initial-size: 10
+      max-active: 10
+#eureka客户端配置
+eureka:
+  instance:
+    instance-id: cloud-order-service-80 # 修改实例的别名
+    prefer-ip-address: true # 显示IP
+  client:
+    service-url:
+      defaultZone: http://server1.com:7001/eureka/,http://server2.com:7002/eureka/,http://server3.com:7003/eureka/ #注册服务到eureka服务器
+    register-with-eureka: true #消费者服务是否注册进eureka
+#mybatis的配置
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml # 指定mapper映射的路径
+  type-aliases-package: com.coderman.payment.model
+  configuration:
+    map-underscore-to-camel-case: true
+#logback配置
+logging:
+  pattern:
+    console: '%d -%msg%n'
+  level:
+    com:
+      coderman: debug
+#配置feign客户端调用微服务的超时时间(OpenFeign默认支持Ribbon)
+feign:
+  client:
+    config:
+      default:
+        #建立连接所用的时间，适用于网络状况正常的情况下，两端连接所需要的时间
+        ConnectTimeOut: 6000
+        #指建立连接后从服务端读取到可用资源所用的时间
+        ReadTimeOut: 6000
+

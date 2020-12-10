@@ -1,5 +1,6 @@
 package com.coderman.payment.service;
 
+import com.coderman.common.vo.JsonData;
 import com.coderman.payment.model.Payment;
 
 import java.math.BigDecimal;
@@ -24,7 +25,7 @@ public interface PaymentService {
      * @param money
      * @param orderId
      */
-    void create(BigDecimal money,String orderId);
+    void create(String orderId,BigDecimal money);
 
     /**
      * 所有支付流水

@@ -8,6 +8,7 @@
 - cloud-consumer-order80: 服务消费者（模拟订单模块）端口:80
 - cloud-consumer-order80-zk: 服务消费者（模拟订单模块）,zookeeper作为 服务注册中心 端口:80
 - cloud-consumer-order80-consul: 服务消费者（模拟订单模块）,consul作为 服务注册中心 端口:80
+- cloud-consumer-order80-openfeign: 服务消费者（模拟订单模块）,使用OpenFeign调用服务 端口:80
 - cloud-provider-payment8001: 服务提供者 （模拟支付模块）端口:8001
 - cloud-provider-payment8002: 服务提供者 （模拟支付模块）端口:8002
 - cloud-provider-payment8003-zk: 服务提供者 （模拟支付模块）,zookeeper作为 服务注册中心 端口:8003
@@ -301,4 +302,61 @@ public class Payment8004ConsulApplication {
 
 ```
 
+### 6. 使用OpenFeign调用服务。
 
+> OpenFeign的声明式方式定义Web服务客户端；其次还更进一步，通过集成Ribbon或Eureka实现负载均衡的HTTP客户端。
+
+#### 1. 服务的调用
+
+- 引入依赖
+
+```xml
+ <!--openfeign-->
+<dependency>
+    <groupId>com.coderman</groupId>
+    <artifactId>cloud-api-commons</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+```
+
+- 配置启动类
+
+```java
+@EnableEurekaClient
+@EnableFeignClients //开启Feign
+@SpringBootApplication
+@MapperScan(basePackages = {"com.coderman.order.mapper"})
+public class Order80FeignApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Order80FeignApplication.class,args);
+    }
+}
+```
+
+- 编写对应接口的服务调用类
+
+```java
+@Component
+@FeignClient(value = "CLOUD-PAYMENT-SERVICE")
+public interface PaymentFeignService {
+
+    @GetMapping(value = "/provider/payment/create/{orderId}/{money}")
+    JsonData create(@PathVariable(value = "orderId") String orderId, @PathVariable(value = "money") BigDecimal money);
+}
+
+```
+
+- 修改调用时的超时时间
+
+```yml
+#配置feign客户端调用微服务的超时时间(OpenFeign默认支持Ribbon)
+feign:
+  client:
+    config:
+      default:
+        #建立连接所用的时间，适用于网络状况正常的情况下，两端连接所需要的时间
+        ConnectTimeOut: 6000
+        #指建立连接后从服务端读取到可用资源所用的时间
+        ReadTimeOut: 6000
+```

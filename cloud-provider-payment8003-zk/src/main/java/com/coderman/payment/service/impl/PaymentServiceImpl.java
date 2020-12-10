@@ -27,7 +27,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void create(BigDecimal money, String orderId) {
+    public void create( String orderId,BigDecimal money) {
         System.out.println("支付服务[8002]-创建流水 订单号：" + orderId + ",金额：" + money);
         //支付流水号
         String serial = UUID.randomUUID().toString();
